@@ -12,13 +12,25 @@ async function loadDatabase() {
     return null;
   }
 
+  const fetchData = async () => {
+    const response = await fetch("/player-statistics.db");
+    if (!response.ok) {
+      return null;
+    }
+    const data = await response.arrayBuffer();
+    return data;
+  };
+
   const sqlPromise = await initSqlJs({
     locateFile: () => `/sql-wasm.wasm`, // Relative path to the SQL.js WASM file
   });
 
   // Load the database file from the server
-  const dataPromise = fetch("/player-statistics.db").then(res => res.arrayBuffer());
-  const [SQL, buf] = await Promise.all([sqlPromise, dataPromise])
+  //const dataPromise = fetch("/player-statistics.db").then(res => res.arrayBuffer());
+  let dataPromise = await fetchData();
+  if (!dataPromise) return null;
+
+  const [SQL, buf] = await Promise.all([sqlPromise, dataPromise]);
   const db = new SQL.Database(new Uint8Array(buf));
   return db;
 }
@@ -36,6 +48,8 @@ async function loadDatabase() {
 export async function getAllPlayers() {
   try {
     const db = await loadDatabase();
+    if (!db) return { success: false, error: "Database not loaded", players: null };
+
     const result = db.exec("SELECT * FROM uuid_map");
 
     const players = result[0]?.values.map(([id, uuid, nick, last_online]) => ({
@@ -72,6 +86,7 @@ export async function getAllPlayers() {
 export async function getPlayerDataByUUID(UUID) {
   try {
     const db = await loadDatabase();
+    if (!db) return { success: false, error: "Database not loaded", player: null };
 
     const playerStmt = db.prepare(`
       SELECT id AS player_id, player_uuid AS uuid, player_nick AS nick, player_last_online AS last_online
@@ -173,9 +188,7 @@ export async function getPlayerDataByUUID(UUID) {
 export async function getPlayerDataByID(playerID) {
   try {
     const db = await loadDatabase();
-    if (!db) {
-      return { success: false, error: "Database not loaded", player: null };
-    }
+    if (!db) return { success: false, error: "Database not loaded", player: null };
 
     const playerStmt = db.prepare(`
       SELECT id AS player_id, player_uuid AS uuid, player_nick AS nick, player_last_online AS last_online
@@ -270,6 +283,7 @@ export async function getPlayerDataByID(playerID) {
 export async function getHallOfFameData() {
   try {
     const db = await loadDatabase();
+    if (!db) return { success: false, error: "Database not loaded", data: null };
 
     const query = `
       SELECT 
@@ -321,6 +335,7 @@ export async function getHallOfFameData() {
 export async function getServerData() {
   try {
     const db = await loadDatabase();
+    if (!db) return { success: false, error: "Database not loaded", data: null };
 
     const query = `
       SELECT
@@ -342,12 +357,15 @@ export async function getServerData() {
         ? `data:image/png;base64,${btoa(
           String.fromCharCode(...new Uint8Array(row.server_icon))
         )}`
-        : null;
+        : "/assets/server_missing_img.webp";
+
+      const desc = row.server_desc ? row.server_desc : "§cPowered by§r\n§a§lPlayer statistics §7§8(no motd found)";
+      const url = row.server_url ? row.server_url : "https://modrinth.com/mod/player-statistics";
 
       serverData = {
         last_update: new Date(row.last_update),
-        desc: row.server_desc,
-        url: row.server_url,
+        desc: desc,
+        url: url,
         icon: iconBase64,
       };
     }
@@ -396,6 +414,8 @@ export async function getServerData() {
 export async function getServerStats() {
   try {
     const db = await loadDatabase();
+    console.log(db);
+    if (!db) return { success: false, error: "Database not loaded", data: null };
 
     const query = `
       SELECT 

@@ -6,19 +6,19 @@ import { useState } from 'react';
 
 const Footer = () => {
 
-    const [commitHash, setCommitHash] = useState("TODO");
+    const [commitHash, setCommitHash] = useState("e871dac");
 
     return (
         <div className="w-full mx-auto self-end mt-4 px-6 py-4 bg-black/40 text-gray-300">
             <div className="container mx-auto">
                 <div className="flex justify-between">
                     <div>
-                        <Link href="/" className="text-xs sm:text-lg font-bold">
+                        <Link href="https://modrinth.com/mod/player-statistics" className="text-xs sm:text-lg font-bold">
                             Player Statistics
                         </Link>
                         <div className="text-xs sm:text-base">
                             <span className="">prod@</span>
-                            <Link href="/" className="text-green-600">
+                            <Link href="https://github.com/FNewel/Player-Statistics.website/releases/tag/1.0.0" className="text-green-600">
                                 {commitHash}
                             </Link>
                         </div>

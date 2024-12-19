@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 import FormattedNumberText from "@/components/FormattedNumberText";
+import ErrorMessage from '@/components/ErrorMessage';
 import { getServerStats } from "@/utils/db";
 
 
@@ -13,6 +14,7 @@ export default function Home() {
   const [serverData, setServerData] = useState({});   // Server data as name, url
   const [serverStats, setServerStats] = useState({}); // Server overall stats of all players
   const [isLoading, setIsLoading] = useState(true);   // Data loading state
+  const [error, setError] = useState(null);           // Error state (if any)
 
   // Icon map for each stat
   const iconMap = {
@@ -67,6 +69,8 @@ export default function Home() {
         // Save formatted stats and finish loading
         setServerStats(formattedStats);
         setIsLoading(false);
+      } else {
+        setError(data.error);
       }
     });
   }, []);
@@ -136,28 +140,34 @@ export default function Home() {
         </p>
       </div>
 
-      <div className="flex flex-wrap justify-center gap-4 pt-4 lg:pt-16">
-        {isLoading ? (
+      {isLoading ? (
+        error ? (
+          ErrorMessage({ error })
+        ) : (
           <div className="flex justify-center py-4">
             <Image src="/assets/loading_clock.gif" alt="Loading" width={80} height={80} />
           </div>
-        ) : (
-          serverStats &&
-          Object.keys(serverStats).map((stat, index) =>
-            <div key={index} className="w-full lg:w-max bg-white/40 rounded-lg">
-              <div className="flex flex-col items-center bg-white rounded-lg p-4 m-2 lg:w-max hover:scale-105 hover:shadow-lg transition-all duration-300">
-                <h2 className="text-xl font-bold text-center">{stat}</h2>
-                <div className="flex flex-col sm:flex-row pt-2 sm:pt-0 space-y-2 sm:space-y-0 sm:space-x-2 items-center">
-                  <Image src={iconMap[stat]} alt="Icon" width={16} height={16} className="shrink-0 w-4 h-4" />
-                  <p className="text-center sm:text-left text-pretty">
-                    <FormattedNumberText text={String(serverStats[stat])} />
-                  </p>
+        )
+      ) : (
+        serverStats &&
+        <div className="flex flex-wrap justify-center gap-4 pt-4 lg:pt-16">
+          {
+            Object.keys(serverStats).map((stat, index) =>
+              <div key={index} className="w-full lg:w-max bg-white/40 rounded-lg">
+                <div className="flex flex-col items-center bg-white rounded-lg p-4 m-2 lg:w-max hover:scale-105 hover:shadow-lg transition-all duration-300">
+                  <h2 className="text-xl font-bold text-center">{stat}</h2>
+                  <div className="flex flex-col sm:flex-row pt-2 sm:pt-0 space-y-2 sm:space-y-0 sm:space-x-2 items-center">
+                    <Image src={iconMap[stat]} alt="Icon" width={16} height={16} className="shrink-0 w-4 h-4" />
+                    <p className="text-center sm:text-left text-pretty">
+                      <FormattedNumberText text={String(serverStats[stat])} />
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
-          )
-        )}
-      </div>
-    </div >
+            )
+          }
+        </div>
+      )}
+    </div>
   );
 }

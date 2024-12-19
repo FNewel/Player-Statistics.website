@@ -44,6 +44,10 @@ export default function PlayerPage() {
      * @returns {null} - No return value but data as states
      */
     const handleQuery = (query) => {
+        if (!query.id || !query.uuid) {
+            return;
+        }
+
         // No need to process data, if player data already exists
         if (playerData.nick) {
             return;

@@ -9,12 +9,13 @@ import Tilt from 'react-parallax-tilt';
 import { base64Image } from '@/utils/playerImage';
 import { getHallOfFameData } from '@/utils/db';
 import FormattedNumberText from '@/components/FormattedNumberText';
+import ErrorMessage from '@/components/ErrorMessage';
 
 
 export default function HallOfFame() {
     const [hofData, setHofData] = useState({});         // Hall of Fame data
     const [isLoading, setIsLoading] = useState(true);   // Loading state
-    const [error, setError] = useState(null);           // Error state
+    const [error, setError] = useState(null);           // Error state (if any)
     const [scale, setScale] = useState(1.15);           // Tilt scale
 
     // Function to load Hall of Fame data from database on page load

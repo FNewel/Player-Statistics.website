@@ -4,7 +4,7 @@ import React from "react";
 
 // Color map for formatting codes
 const colorMap = {
-    "0": "mc_black",
+    "0": "mc_white",
     "1": "mc_dark_blue",
     "2": "mc_dark_green",
     "3": "mc_dark_aqua",
@@ -76,7 +76,7 @@ const MinecraftText = ({ text }) => {
     const parsedElements = parseText(text);
 
     return (
-        <p className="whitespace-pre-wrap">
+        <p className="whitespace-pre-wrap text-white">
             {parsedElements.map((element, index) => (
                 <React.Fragment key={index}>{element}</React.Fragment>
             ))}
