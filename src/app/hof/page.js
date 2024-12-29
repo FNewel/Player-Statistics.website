@@ -139,7 +139,7 @@ export default function HallOfFame() {
                             </thead>
                             <tbody className='bg-white/40 text-xs sm:text-base'>
                                 {
-                                    Array(12).fill(0).map((_, index) => (
+                                    Array(hofData.length - 3).fill(0).map((_, index) => (
                                         <tr key={index} className="hover:bg-gray-300/40 even:bg-white/50 hover:font-bold">
                                             <td className="sm:px-4 py-2 text-center">{index + 4}.</td>
                                             <td className="sm:px-4 py-2">
