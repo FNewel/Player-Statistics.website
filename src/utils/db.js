@@ -128,3 +128,19 @@ export const getServerStats = async (...args) => {
     const db = await dbModule;
     return db.getServerStats(...args);
 };
+
+/**
+ * Get data for a specific stat from the database
+ * Function asynchronously gets data from the database (Rank, Player_nick, Score)
+ * @param {string} tableName - Name of the table to query (e.g., "custom").
+ * @param {string} statName - Name of the stat to filter by (e.g., "climb_one_cm").
+ * @returns {Promise<{
+*                     success: boolean,
+*                     error: string | null,
+*                     data: Array<{rank: number, nick: string, score: number}> | null
+*                   }>}
+*/
+export const getStatData = async (...args) => {
+    const db = await dbModule;
+    return db.getStatData(...args);
+};

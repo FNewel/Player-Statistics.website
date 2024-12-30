@@ -489,3 +489,59 @@ export async function getServerStats() {
     };
   }
 }
+
+/**
+ * Get data for a specific stat from the database
+ * Function asynchronously gets data from the database (Rank, Player_nick, Score)
+ * @param {string} tableName - Name of the table to query (e.g., "custom").
+ * @param {string} statName - Name of the stat to filter by (e.g., "climb_one_cm").
+ * @returns {Promise<{
+*                     success: boolean,
+*                     error: string | null,
+*                     data: Array<{rank: number, nick: string, score: number}> | null
+*                   }>}
+*/
+export async function getStatData(tableName, statName) {
+  try {
+    const db = await loadDatabase();
+    if (!db) return { success: false, error: "Database not loaded", data: null };
+
+    const query = `
+     SELECT 
+       c.position AS rank,
+       u.id AS Player_id,
+       u.player_uuid AS Player_uuid,
+       u.player_nick AS nick,
+       c.amount AS score
+     FROM ${tableName} c
+     INNER JOIN uuid_map u ON c.player_id = u.id
+     WHERE c.stat_name = ?
+     ORDER BY Score DESC
+   `;
+
+    const stmt = db.prepare(query);
+    stmt.bind([statName]);
+
+    const resultData = [];
+    while (stmt.step()) {
+      const row = stmt.getAsObject();
+      resultData.push({
+        rank: row.rank,
+        player_id: row.Player_id,
+        player_uuid: row.Player_uuid,
+        player_nick: row.nick,
+        score: row.score,
+      });
+    }
+    stmt.free();
+
+    return {
+      success: true,
+      error: null,
+      data: resultData,
+    };
+  } catch (err) {
+    console.error("ERROR (getStatData):", err);
+    return { success: false, error: err.message, data: null };
+  }
+}
