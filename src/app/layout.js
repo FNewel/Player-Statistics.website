@@ -15,7 +15,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${monocraft.className} antialiased bg-white overflow-y-scroll`}
+        className={`${monocraft.className} antialiased bg-black overflow-y-scroll`}
       >
         <div className="relative min-h-screen">
 
