@@ -9,6 +9,7 @@ import ErrorMessage from "@/components/ErrorMessage";
 import { getPlayerDataByID, getPlayerDataByUUID } from "@/utils/db";
 import FormattedStatText from "@/components/FormattedStatText";
 import FormattedNumberText from "@/components/FormattedNumberText";
+import Link from "next/link";
 
 
 /**
@@ -383,7 +384,9 @@ export default function PlayerPage() {
                                     }
                                 </td>
                                 <td className="text-gray-700 truncate overflow-hidden max-w-20">
-                                    <FormattedStatText text={stat.name} />
+                                    <Link href={`/stat?c=${selectedStat}&q=${stat.name}`}>
+                                        <FormattedStatText text={stat.name} />
+                                    </Link>
                                 </td>
                                 <td className="text-right pr-4 ">
                                     <FormattedNumberText text={String(stat.value)} />
