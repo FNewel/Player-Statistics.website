@@ -2,36 +2,157 @@
 
 import initSqlJs from "sql.js";
 
+
+const DB_UPDATE_INTERVAL = 1  // 1 hour
 const statTables = ['broken', 'crafted', 'custom', 'dropped', 'killed', 'killed_by', 'mined', 'picked_up', 'used'];
 
 
-// Load the database file and return the database object
+
+/**
+ * Initialize IndexedDB
+ * Function asynchronously initializes the IndexedDB and creates the object store if it doesn't exist
+ *
+ * @returns {Promise<IDBDatabase>} - IndexedDB database object
+ */
+async function initializeIndexedDB() {
+  return new Promise((resolve, reject) => {
+    const request = indexedDB.open("PlayerStatisticsDB", 1);
+
+    request.onupgradeneeded = (event) => {
+      const db = event.target.result;
+
+      if (!db.objectStoreNames.contains("database")) {
+        db.createObjectStore("database");
+        console.log("ObjectStore 'database' created successfully.");
+      }
+    };
+
+    request.onsuccess = (event) => {
+      resolve(event.target.result);
+    };
+
+    request.onerror = (event) => {
+      console.error("Error initializing IndexedDB:", event.target.error);
+      reject(event.target.error);
+    };
+  });
+}
+
+/**
+ * Save database to IndexedDB
+ * Function asynchronously saves the database to IndexedDB with a timestamp
+ * or (creates/) updates the database if it (not) already exists
+ *
+ * @param {Uint8Array} binaryArray - Binary array of the database
+ * @returns {Promise<boolean>} - True if successful, false otherwise
+ */
+async function saveDatabaseToIndexedDB(binaryArray) {
+  const db = await initializeIndexedDB();
+
+  return new Promise((resolve, reject) => {
+    const transaction = db.transaction("database", "readwrite");
+    const store = transaction.objectStore("database");
+
+    const timestamp = Date.now();
+
+    const putRequest = store.put({ db: binaryArray, timestamp }, "cachedDatabase");
+
+    putRequest.onsuccess = () => {
+      console.log("Database and timestamp saved successfully.");
+      resolve(true);
+    };
+
+    putRequest.onerror = (event) => {
+      console.error("Error saving database:", event.target.error);
+      reject(event.target.error);
+    };
+  });
+}
+
+/**
+ * Load database from IndexedDB
+ * Function asynchronously loads the database from IndexedDB and returns it
+ *
+ * @returns {Promise<Object | null>} - Database object or null if not found
+ */
+async function loadDatabaseFromIndexedDB() {
+  const db = await initializeIndexedDB();
+
+  return new Promise((resolve, reject) => {
+    const transaction = db.transaction("database", "readonly");
+    const store = transaction.objectStore("database");
+
+    const getRequest = store.get("cachedDatabase");
+
+    getRequest.onsuccess = (event) => {
+      const result = getRequest.result;
+      if (result) {
+        console.log("Database and timestamp loaded successfully.");
+        resolve(result);
+      } else {
+        console.warn("No database found in IndexedDB.");
+        resolve(null);
+      }
+    };
+
+    getRequest.onerror = (event) => {
+      console.error("Error loading database:", event.target.error);
+      reject(event.target.error);
+    };
+  });
+}
+
+/**
+ * Load database from IndexedDB or fetch from server
+ * Function asynchronously loads the database from IndexedDB or fetches it from the server if it's not available or too old
+ * 
+ * @returns {Promise<SQL.Database>} - Database object
+ * @throws {Error} - If there is an error loading the database
+ */
 async function loadDatabase() {
-  // Check if undefined
+
+  // Check if window is defined
   if (typeof window === 'undefined') {
     return null;
   }
 
-  const fetchData = async () => {
-    const response = await fetch("/player-statistics.db");
-    if (!response.ok) {
-      return null;
-    }
-    const data = await response.arrayBuffer();
-    return data;
-  };
-
+  // Initialize SQL.js
   const sqlPromise = await initSqlJs({
-    locateFile: () => `/sql-wasm.wasm`, // Relative path to the SQL.js WASM file
+    locateFile: () => `/sql-wasm.wasm`,
   });
 
-  // Load the database file from the server
-  //const dataPromise = fetch("/player-statistics.db").then(res => res.arrayBuffer());
-  let dataPromise = await fetchData();
-  if (!dataPromise) return null;
+  // Get SQL.js instance
+  const SQL = sqlPromise;
 
-  const [SQL, buf] = await Promise.all([sqlPromise, dataPromise]);
-  const db = new SQL.Database(new Uint8Array(buf));
+  // Load database from IndexedDB
+  const result = await loadDatabaseFromIndexedDB();
+  if (result) {
+    const { db: binaryArray, timestamp } = result;
+
+    const ageInHours = (Date.now() - timestamp) / (1000 * 60 * 60);
+    if (ageInHours < DB_UPDATE_INTERVAL) {
+      console.log(`Using cached database. Age: ${ageInHours.toFixed(2)} hours.`);
+      return new SQL.Database(new Uint8Array(binaryArray));
+    }
+
+    console.log(`Cached database is too old (Age: ${ageInHours.toFixed(2)} hours). Refreshing...`);
+  } else {
+    console.log("No cached database found. Downloading new database...");
+  }
+
+  // If no database in IndexedDB or it's too old, fetch new database from server
+  const response = await fetch("/player-statistics.db");
+  if (!response.ok) {
+    throw new Error("Failed to fetch database from server.");
+  }
+  const data = await response.arrayBuffer();
+
+  const db = new SQL.Database(new Uint8Array(data));
+
+  // Save new database to IndexedDB
+  const binaryArray = db.export();
+  await saveDatabaseToIndexedDB(binaryArray);
+
   return db;
 }
 
@@ -414,7 +535,6 @@ export async function getServerData() {
 export async function getServerStats() {
   try {
     const db = await loadDatabase();
-    console.log(db);
     if (!db) return { success: false, error: "Database not loaded", data: null };
 
     const query = `
