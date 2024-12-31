@@ -110,7 +110,7 @@ export default function PlayerPage() {
             <div className="w-full md:w-1/2 lg:w-1/3 mx-auto pb-4">
                 <input
                     type="text"
-                    placeholder="Search ..."
+                    placeholder="Search by nick ..."
                     value={searchQuery}
                     onChange={(e) => handleSearch(e.target.value)}
                     className="p-2 rounded-md w-full focus:outline-none"

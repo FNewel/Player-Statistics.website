@@ -67,10 +67,10 @@ export default function HallOfFame() {
                                     </div>
 
                                     <div className='bg-white/20 p-1 shadow-md rounded-md'>
-                                        <div className="flex relative flex-col items-center justify-center bg-white/50 border-2 border-gray-400/20 rounded-md px-8 py-3 lg:pt-6">
-                                            <h3 className="text-2xl font-bold">{hofData[2].nick}</h3>
-                                            <p><span className="text-mc_gold text-lg"><FormattedNumberText text={String(hofData[2].score)} />⭐</span></p>
-                                            <p className="absolute bottom-0 right-0 font-bold text-2xl text-gray-500/50">3.</p>
+                                        <div className="flex relative flex-col sm:items-center items-end justify-center bg-white/50 border-2 border-gray-400/20 rounded-md sm:px-8 px-12 py-3 lg:pt-6">
+                                            <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold">{hofData[2].nick}</h3>
+                                            <p><span className="text-mc_gold text-base sm:text-lg lg:text-2xl"><FormattedNumberText text={String(hofData[2].score)} />⭐</span></p>
+                                            <p className="absolute bottom-0 right-0 font-bold text-xl sm:text-2xl text-gray-500/50">3.</p>
                                         </div>
                                     </div>
                                 </Link>
@@ -91,10 +91,10 @@ export default function HallOfFame() {
                                     </div>
 
                                     <div className='bg-yellow-200/30 p-1 shadow-md rounded-md'>
-                                        <div className="flex relative flex-col items-center justify-center bg-yellow-200/50 border-2 border-yellow-400/30 rounded-md px-8 py-3 lg:py-12 lg:pt-16">
-                                            <h3 className="text-2xl lg:text-4xl font-bold">{hofData[0].nick}</h3>
-                                            <p><span className="text-mc_gold text-lg lg:text-2xl"><FormattedNumberText text={String(hofData[0].score)} />⭐</span></p>
-                                            <p className="absolute bottom-0 right-0 font-bold text-2xl text-gray-500/50">1.</p>
+                                        <div className="flex relative flex-col sm:items-center items-end justify-center bg-yellow-200/50 border-2 border-yellow-400/30 rounded-md sm:px-8 px-10 py-3 lg:py-12 lg:pt-16">
+                                            <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold">{hofData[0].nick}</h3>
+                                            <p><span className="text-mc_gold text-base sm:text-lg lg:text-2xl"><FormattedNumberText text={String(hofData[0].score)} />⭐</span></p>
+                                            <p className="absolute bottom-0 right-0 font-bold text-xl sm:text-2xl text-gray-500/50">1.</p>
                                         </div>
                                     </div>
                                 </Link>
@@ -115,11 +115,10 @@ export default function HallOfFame() {
                                     </div>
 
                                     <div className='bg-orange-200/30 p-1 shadow-md rounded-md'>
-                                        <div className="flex relative flex-col items-center justify-center bg-orange-200/50 border-2 border-orange-300/20 rounded-md px-8 py-3 lg:py-7 lg:pt-12">
-                                            <h3 className="text-2xl lg:text-3xl font-bold">{hofData[1].nick}</h3>
-                                            <p><span className="text-mc_gold text-lg lg:text-xl"><FormattedNumberText text={String(hofData[1].score)} />⭐</span></p>
-
-                                            <p className="absolute bottom-0 right-0 font-bold text-2xl text-gray-500/50">2.</p>
+                                        <div className="flex relative flex-col sm:items-center items-end justify-center bg-orange-200/50 border-2 border-orange-300/20 rounded-md sm:px-8 px-12 py-3 lg:py-7 lg:pt-12">
+                                            <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold">{hofData[1].nick}</h3>
+                                            <p><span className="text-mc_gold text-base sm:text-lg lg:text-2xl"><FormattedNumberText text={String(hofData[1].score)} />⭐</span></p>
+                                            <p className="absolute bottom-0 right-0 font-bold text-xl sm:text-2xl text-gray-500/50">2.</p>
                                         </div>
                                     </div>
                                 </Link>
@@ -161,6 +160,18 @@ export default function HallOfFame() {
                                 }
                             </tbody>
                         </table>
+                    </div>
+
+                    <div className='bg-white/40 rounded-lg mt-4 p-6 text-sm sm:text-sx text-center text-gray-600'>
+                        <p>
+                            The <strong>first 5 places are awarded</strong> for each statistic.
+                        </p>
+                        <p>
+                            Points are then awarded for these places as follows: <strong>1st place 10 points</strong>, <strong>2nd 5p</strong>, <strong>3rd 3p</strong>, <strong>4th 2p</strong>, <strong>5th 1p</strong>, other places have no points.
+                        </p>
+                        <p>
+                            These points are then summed up and the resulting TOP 15 players are displayed in the Hall of Fame.
+                        </p>
                     </div>
                 </>
             )}
