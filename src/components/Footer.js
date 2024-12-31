@@ -18,7 +18,7 @@ const Footer = () => {
                         </Link>
                         <div className="text-xs sm:text-base">
                             <span className="">prod@</span>
-                            <Link href="https://github.com/FNewel/Player-Statistics.website/releases/tag/1.1.0" className="text-green-600">
+                            <Link href="https://github.com/FNewel/Player-Statistics.website/releases/tag/1.1.1" className="text-green-600">
                                 {commitHash}
                             </Link>
                         </div>
