@@ -4,6 +4,7 @@ import initSqlJs from "sql.js";
 
 
 const DB_UPDATE_INTERVAL = 1  // 1 hour
+let lastUpdate = null;        // Last update timestamp to check if the database was initialized and is ready to be saved to IndexedDB
 const statTables = ['broken', 'crafted', 'custom', 'dropped', 'killed', 'killed_by', 'mined', 'picked_up', 'used'];
 
 
@@ -145,13 +146,16 @@ async function loadDatabase() {
   if (!response.ok) {
     throw new Error("Failed to fetch database from server.");
   }
+
   const data = await response.arrayBuffer();
 
   const db = new SQL.Database(new Uint8Array(data));
 
   // Save new database to IndexedDB
-  const binaryArray = db.export();
-  await saveDatabaseToIndexedDB(binaryArray);
+  if (lastUpdate) {
+    const binaryArray = db.export();
+    await saveDatabaseToIndexedDB(binaryArray);
+  }
 
   return db;
 }
@@ -494,6 +498,11 @@ export async function getServerData() {
 
     if (!serverData) {
       return { success: false, error: "No server data found", data: null };
+    }
+
+    // Update last update timestamp only if it's different from "1970-01-01 00:00:00"
+    if (serverData.last_update > new Date("1970-01-01 00:00:00")) {
+      lastUpdate = serverData.last_update;
     }
 
     return {

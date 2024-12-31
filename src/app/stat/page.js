@@ -199,8 +199,8 @@ function StatPageContent() {
                                                                 <Image
                                                                     src={`https://nmsr.nickac.dev/face/${stat.player_uuid}`}
                                                                     alt="Player Head"
-                                                                    width={index < 10 ? 24 : 16}
-                                                                    height={index < 10 ? 24 : 16}
+                                                                    width={index < 5 ? 24 : 16}
+                                                                    height={index < 5 ? 24 : 16}
                                                                 />
                                                                 <p className="truncate overflow-hidden">{stat.player_nick || 'Missing nick'}</p>
                                                             </div>

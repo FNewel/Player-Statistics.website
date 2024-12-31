@@ -21,7 +21,7 @@ export default function HallOfFame() {
     // Function to load Hall of Fame data from database on page load
     useEffect(() => {
         getHallOfFameData().then((data) => {
-            if (data.success) {
+            if (data.success && data.data && data.data.length > 0) {
                 setHofData(data.data);
                 setIsLoading(false);
             } else {
