@@ -187,12 +187,12 @@ export default function PlayerPage() {
                                         <td className="pl-4 py-1">
                                             <Link href={`/player?q=${user.id}&uuid=${user.uuid}`} className="flex items-center space-x-2">
                                                 <Image
-                                                    src={`https://crafatar.com/avatars/${user.uuid}?size=32`}
+                                                    src={`https://nmsr.nickac.dev/face/${user.uuid}`}
                                                     alt="Player Head"
                                                     width={32}
                                                     height={32}
                                                 />
-                                                <p>{user.nick}</p>
+                                                <p>{user.nick || 'Missing nick'}</p>
                                             </Link>
                                         </td>
                                         <td className="pr-4 text-right py-1">{user.last_online.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })} - {user.last_online.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric' })}</td>

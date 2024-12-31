@@ -197,12 +197,12 @@ function StatPageContent() {
                                                         <Link href={`/player?q=${stat.player_id}&uuid=${stat.player_uuid}`}>
                                                             <div className="flex items-center  space-x-2">
                                                                 <Image
-                                                                    src={`https://crafatar.com/avatars/${stat.player_uuid}?size=${index < 10 ? 24 : 16}`}
+                                                                    src={`https://nmsr.nickac.dev/face/${stat.player_uuid}`}
                                                                     alt="Player Head"
                                                                     width={index < 10 ? 24 : 16}
                                                                     height={index < 10 ? 24 : 16}
                                                                 />
-                                                                <p className="truncate overflow-hidden">{stat.player_nick}</p>
+                                                                <p className="truncate overflow-hidden">{stat.player_nick || 'Missing nick'}</p>
                                                             </div>
                                                         </Link>
                                                     </td>

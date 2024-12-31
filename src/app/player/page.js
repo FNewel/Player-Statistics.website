@@ -213,7 +213,7 @@ export default function PlayerPage() {
                 <div className="flex flex-col justify-center">
                     {playerData.uuid ? (
                         <Image
-                            src={`https://crafatar.com/avatars/${playerData.uuid}?size=80`}
+                            src={`https://nmsr.nickac.dev/face/${playerData.uuid}`}
                             alt="Player Head"
                             width={80}
                             height={80}
@@ -229,7 +229,7 @@ export default function PlayerPage() {
                 </div>
                 <div className="flex flex-col justify-center items-center sm:items-start text-xs sm:text-base">
                     <div className="flex items-center space-x-2">
-                        <h2 className="text-xl sm:text-3xl font-bold">{playerData.nick}</h2>
+                        <h2 className="text-xl sm:text-3xl font-bold">{playerData.nick || 'Missing nick'}</h2>
                         <p>(<span className="text-mc_gold">{playerData.hof_score}⭐</span>)</p>
                     </div>
                     <p><b>Last played:</b> {playerData.last_online}</p>

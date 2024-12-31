@@ -68,7 +68,7 @@ export default function HallOfFame() {
 
                                     <div className='bg-white/20 p-1 shadow-md rounded-md'>
                                         <div className="flex relative flex-col sm:items-center items-end justify-center bg-white/50 border-2 border-gray-400/20 rounded-md sm:px-8 px-12 py-3 lg:pt-6">
-                                            <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold">{hofData[2].nick}</h3>
+                                            <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-center">{hofData[2].nick || 'Missing nick'}</h3>
                                             <p><span className="text-mc_gold text-base sm:text-lg lg:text-2xl"><FormattedNumberText text={String(hofData[2].score)} />⭐</span></p>
                                             <p className="absolute bottom-0 right-0 font-bold text-xl sm:text-2xl text-gray-500/50">3.</p>
                                         </div>
@@ -92,7 +92,7 @@ export default function HallOfFame() {
 
                                     <div className='bg-yellow-200/30 p-1 shadow-md rounded-md'>
                                         <div className="flex relative flex-col sm:items-center items-end justify-center bg-yellow-200/50 border-2 border-yellow-400/30 rounded-md sm:px-8 px-10 py-3 lg:py-12 lg:pt-16">
-                                            <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold">{hofData[0].nick}</h3>
+                                            <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-center">{hofData[0].nick || 'Missing nick'}</h3>
                                             <p><span className="text-mc_gold text-base sm:text-lg lg:text-2xl"><FormattedNumberText text={String(hofData[0].score)} />⭐</span></p>
                                             <p className="absolute bottom-0 right-0 font-bold text-xl sm:text-2xl text-gray-500/50">1.</p>
                                         </div>
@@ -116,7 +116,7 @@ export default function HallOfFame() {
 
                                     <div className='bg-orange-200/30 p-1 shadow-md rounded-md'>
                                         <div className="flex relative flex-col sm:items-center items-end justify-center bg-orange-200/50 border-2 border-orange-300/20 rounded-md sm:px-8 px-12 py-3 lg:py-7 lg:pt-12">
-                                            <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold">{hofData[1].nick}</h3>
+                                            <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-center">{hofData[1].nick || 'Missing nick'}</h3>
                                             <p><span className="text-mc_gold text-base sm:text-lg lg:text-2xl"><FormattedNumberText text={String(hofData[1].score)} />⭐</span></p>
                                             <p className="absolute bottom-0 right-0 font-bold text-xl sm:text-2xl text-gray-500/50">2.</p>
                                         </div>
@@ -145,12 +145,12 @@ export default function HallOfFame() {
                                                 <Link href={`/player?q=${hofData[index + 3].id}&uuid=${hofData[index + 3].uuid}`}>
                                                     <div className="flex items-center  space-x-2">
                                                         <Image
-                                                            src={`https://crafatar.com/avatars/${hofData[index + 3].uuid}?size=80`}
+                                                            src={`https://nmsr.nickac.dev/face/${hofData[index + 3].uuid}`}
                                                             alt="Player Head"
                                                             width={32}
                                                             height={32}
                                                         />
-                                                        <p>{hofData[index + 3].nick}</p>
+                                                        <p>{hofData[index + 3].nick || 'Missing nick'}</p>
                                                     </div>
                                                 </Link>
                                             </td>
