@@ -1,0 +1,11 @@
+☐ Fix some visual bugs.
+    ✔ Hall of Fame top 3 players nick overlapping with player skin. @done(24-12-31 12:37)
+✔ Fix a bug when the database has not been initialized yet. @done(24-12-31 12:00)
+✔ Fix a bug (HoF) when there are less than 15 players. @done(24-12-31 12:00)
+☐ Add dark mode.
+☐ Add other languages (translation page).
+✔ Add selected stat page. (*) @done(24-12-31 12:00)
+✔ Make page loading more efficient. @done(24-12-31 12:00)
+☐ Add live demo website.
+✔ Add labels on pages (e.g. how the score is calculated). @done(24-12-31 12:36)
+☐ Better integration with phones (long texts ..)
