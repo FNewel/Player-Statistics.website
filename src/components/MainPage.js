@@ -30,12 +30,8 @@ const MainPage = ({ children }) => {
 
             {/* Page Content */}
             <div className="container mx-auto sm:px-8 transition-all duration-300">
-                <div className="overflow-hidden sm:rounded-xl p-8"
-                    style={{
-                        backgroundImage: 'url("/assets/background/quartz.webp")',
-                    }}
-                >
-                    <div className="opacity-30 pb-2">
+                <div className="overflow-hidden sm:rounded-xl p-8 bg-quartz-pattern dark:bg-coal-pattern transition-all duration-300">
+                    <div className="opacity-30 pb-2 dark:text-white transition-all duration-300">
                         <p className="text-xs text-right">Last update:</p>
                         <p className="text-xs text-right">{serverData?.last_update.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })} - {serverData?.last_update.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric' })}</p>
                     </div>
