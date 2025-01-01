@@ -15,11 +15,7 @@ const Menu = ({ desc, url, icon }) => {
         <div className="container z-50 mx-auto sticky top-2 mb-6 flex-col sm:space-y-2 px-2 transition-all duration-300 ">
             {/* Menu */}
             <div className='hidden sm:flex sm:space-x-2 h-16'>
-                <div className="w-full rounded-xl border-2 border-gray-100 shadow-lg inline-flex items-center justify-between p-2"
-                    style={{
-                        backgroundImage: 'url("/assets/background/quartz.webp")',
-                    }}
-                >
+                <div className="w-full rounded-xl border-2 border-gray-100 dark:border-gray-700 dark:text-gray-100 shadow-lg inline-flex items-center justify-between p-2 bg-quartz-pattern dark:bg-coal-pattern transition-all duration-300">
                     <div className="flex space-x-2 ">
                         <Link href="/" className="hover:font-bold p-2"> Home </Link>
                         <Link href="/hof" className="hover:font-bold p-2 truncate"> Hall of Fame </Link>
@@ -32,7 +28,7 @@ const Menu = ({ desc, url, icon }) => {
                         <AppearanceSwitch />
 
                         <select
-                            className="p-2 px-3 rounded-lg appearance-none focus:outline-none cursor-pointer bg-white"
+                            className="p-2 px-3 rounded-lg appearance-none focus:outline-none cursor-pointer bg-white dark:bg-zinc-800 text-black dark:text-gray-100 transition-all duration-300"
                         >
                             <option value="en">English</option>
                             <option value="sk">Slovak</option>
@@ -42,11 +38,7 @@ const Menu = ({ desc, url, icon }) => {
                 </div>
 
                 <Link href={url}>
-                    <div className="rounded-xl border-2 p-0.5 border-gray-100 shadow-lg inline-flex space-x-2 items-center justify-end w-fit"
-                        style={{
-                            backgroundImage: 'url("/assets/background/quartz.webp")',
-                        }}
-                    >
+                    <div className="rounded-xl border-2 p-0.5 border-gray-100 dark:border-gray-700 shadow-lg inline-flex space-x-2 items-center justify-end w-fit bg-quartz-pattern dark:bg-coal-pattern transition-all duration-300">
                         <div className="w-[56px] h-[56px] rounded-lg ">
                             <Image src={icon} alt="Sever Icon" width={56} height={56} className="rounded-lg" />
                         </div>
