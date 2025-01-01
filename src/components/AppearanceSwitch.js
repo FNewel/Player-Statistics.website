@@ -6,21 +6,29 @@ const AppearanceSwitch = () => {
     const [isDarkMode, setIsDarkMode] = useState(false);
 
     useEffect(() => {
-        const savedMode = localStorage.getItem('darkMode') === 'true';
-        setIsDarkMode(savedMode);
+        // Check system preference
+        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-        // Set initial body class without overwriting existing ones
-        document.body.classList.add(savedMode ? 'dark-mode' : 'light-mode');
+        // Get saved preference from localStorage or fallback to system setting
+        const savedPreference = localStorage.getItem('darkMode');
+        const darkModeEnabled = savedPreference !== null
+            ? savedPreference === 'true'
+            : systemPrefersDark;
+
+        setIsDarkMode(darkModeEnabled);
+
+        // Apply the correct class to <html>
+        document.documentElement.classList.toggle('dark', darkModeEnabled);
     }, []);
 
     const toggleMode = () => {
         const newMode = !isDarkMode;
         setIsDarkMode(newMode);
 
-        // Update body classes safely
-        document.body.classList.remove(newMode ? 'light-mode' : 'dark-mode');
-        document.body.classList.add(newMode ? 'dark-mode' : 'light-mode');
+        // Update the <html> element
+        document.documentElement.classList.toggle('dark', newMode);
 
+        // Save preference to localStorage
         localStorage.setItem('darkMode', newMode);
     };
 
@@ -40,8 +48,7 @@ const AppearanceSwitch = () => {
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                className={`absolute transition-transform duration-300 ease-in-out ${isDarkMode ? 'opacity-100 scale-100 rotate-0' : 'opacity-0 scale-50 rotate-180'
-                    }`}
+                className={`absolute transition-transform duration-300 ease-in-out ${isDarkMode ? 'opacity-0 scale-50 rotate-180' : 'opacity-100 scale-100 rotate-0'}`}
             >
                 <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
             </svg>
@@ -57,8 +64,7 @@ const AppearanceSwitch = () => {
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                className={`absolute transition-transform duration-300 ease-in-out ${isDarkMode ? 'opacity-0 scale-50 rotate-180' : 'opacity-100 scale-100 rotate-0'
-                    }`}
+                className={`text-white absolute transition-transform duration-300 ease-in-out ${isDarkMode ? 'opacity-100 scale-100 rotate-0' : 'opacity-0 scale-50 rotate-180'}`}
             >
                 <circle cx="12" cy="12" r="4" />
                 <path d="M12 2v2" />
