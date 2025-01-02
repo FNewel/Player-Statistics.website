@@ -1,5 +1,7 @@
 /** @type {import('tailwindcss').Config} */
-export default {
+
+const config = {
+  darkMode: 'selector',
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -27,7 +29,16 @@ export default {
         'mc_yellow': '#FFFF55',
         'mc_white': '#FFFFFF',
       },
+      backgroundImage: {
+        'top-pattern': 'url("/assets/background/top.webp")',
+        'mid-pattern': 'url("/assets/background/mid.webp")',
+        'bottom-pattern': 'url("/assets/background/bottom.webp")',
+        'coal-pattern': 'url("/assets/background/coal.webp")',
+        'quartz-pattern': 'url("/assets/background/quartz.webp")',
+      }
     },
   },
   plugins: [],
 };
+
+export default config;
