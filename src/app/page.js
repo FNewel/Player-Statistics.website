@@ -124,18 +124,18 @@ export default function Home() {
 
   return (
     <div className="pb-8">
-      <div className="flex flex-col items-center pb-8">
+      <div className="flex flex-col items-center pb-8 text-4xl sm:text-5xl font-bold">
         {isLoading ? (
-          <Link href="https://modrinth.com/mod/player-statistics" className="text-4xl sm:text-5xl font-bold text-gray-500 hover:text-blue-600 hover:scale-105 transition-all duration-300">
+          <Link href="https://modrinth.com/mod/player-statistics" className="text-gray-500 hover:text-blue-600 dark:hover:text-blue-500 hover:scale-105 transition-all duration-300">
             Player Statistics
           </Link>
         ) : (
-          <Link href={serverData.url} className="text-4xl sm:text-5xl font-bold hover:text-blue-600 hover:scale-105 transition-all duration-300">
+          <Link href={serverData.url} className="dark:text-white hover:text-blue-600 dark:hover:text-blue-500 hover:scale-105 transition-all duration-300">
             {serverData.name}
           </Link>
         )}
 
-        <p className="sm:text-lg text-center transition-all duration-300">
+        <p className="sm:text-lg text-center text-gray-500 dark:text-gray-400 transition-all duration-300">
           Summary of all player statistics
         </p>
       </div>
@@ -153,12 +153,12 @@ export default function Home() {
         <div className="flex flex-wrap justify-center gap-4 pt-4 lg:pt-16">
           {
             Object.keys(serverStats).map((stat, index) =>
-              <div key={index} className="w-full lg:w-max bg-white/40 rounded-lg">
-                <div className="flex flex-col items-center bg-white rounded-lg p-4 m-2 lg:w-max hover:scale-105 hover:shadow-lg transition-all duration-300">
-                  <h2 className="text-xl font-bold text-center">{stat}</h2>
+              <div key={index} className="w-full lg:w-max bg-white/40 dark:bg-zinc-500/40 rounded-lg transition-all duration-300">
+                <div className="flex flex-col items-center bg-white dark:bg-zinc-800 rounded-lg p-4 m-2 lg:w-max hover:scale-105 hover:shadow-lg transition-all duration-300">
+                  <h2 className="text-xl font-bold text-center dark:text-gray-200 transition-all duration-300">{stat}</h2>
                   <div className="flex flex-col sm:flex-row pt-2 sm:pt-0 space-y-2 sm:space-y-0 sm:space-x-2 items-center">
                     <Image src={iconMap[stat]} alt="Icon" width={16} height={16} className="shrink-0 w-4 h-4" />
-                    <p className="text-center sm:text-left text-pretty">
+                    <p className="text-center sm:text-left text-pretty dark:text-gray-300 transition-all duration-300">
                       <FormattedNumberText text={String(serverStats[stat])} />
                     </p>
                   </div>

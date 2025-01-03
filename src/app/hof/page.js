@@ -34,8 +34,8 @@ export default function HallOfFame() {
     return (
         <>
             <div className="flex flex-col items-center pb-8">
-                <h2 className="text-3xl sm:text-4xl font-bold">Hall of Fame</h2>
-                <p className="text-gray-600 text-center sm:text-left">Top 15 players with the highest score</p>
+                <h2 className="dark:text-white text-3xl sm:text-4xl font-bold transition-all duration-300">Hall of Fame</h2>
+                <p className="text-gray-500 dark:text-gray-400 text-center sm:text-left transition-all duration-300">Top 15 players with the highest score</p>
             </div>
 
             {isLoading ? (
@@ -70,7 +70,7 @@ export default function HallOfFame() {
                                         <div className="flex relative flex-col sm:items-center items-end justify-center bg-white/50 border-2 border-gray-400/20 rounded-md sm:px-8 px-12 py-3 lg:pt-6">
                                             <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-center">{hofData[2].nick || 'Missing nick'}</h3>
                                             <p><span className="text-mc_gold text-base sm:text-lg lg:text-2xl"><FormattedNumberText text={String(hofData[2].score)} />⭐</span></p>
-                                            <p className="absolute bottom-0 right-0 font-bold text-xl sm:text-2xl text-gray-500/50">3.</p>
+                                            <p className="absolute bottom-0 right-0 font-bold text-xl sm:text-2xl text-gray-500/50 dark:text-white">3.</p>
                                         </div>
                                     </div>
                                 </Link>
@@ -94,7 +94,7 @@ export default function HallOfFame() {
                                         <div className="flex relative flex-col sm:items-center items-end justify-center bg-yellow-200/50 border-2 border-yellow-400/30 rounded-md sm:px-8 px-10 py-3 lg:py-12 lg:pt-16">
                                             <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-center">{hofData[0].nick || 'Missing nick'}</h3>
                                             <p><span className="text-mc_gold text-base sm:text-lg lg:text-2xl"><FormattedNumberText text={String(hofData[0].score)} />⭐</span></p>
-                                            <p className="absolute bottom-0 right-0 font-bold text-xl sm:text-2xl text-gray-500/50">1.</p>
+                                            <p className="absolute bottom-0 right-0 font-bold text-xl sm:text-2xl text-gray-500/50 dark:text-white">1.</p>
                                         </div>
                                     </div>
                                 </Link>
@@ -118,7 +118,7 @@ export default function HallOfFame() {
                                         <div className="flex relative flex-col sm:items-center items-end justify-center bg-orange-200/50 border-2 border-orange-300/20 rounded-md sm:px-8 px-12 py-3 lg:py-7 lg:pt-12">
                                             <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-center">{hofData[1].nick || 'Missing nick'}</h3>
                                             <p><span className="text-mc_gold text-base sm:text-lg lg:text-2xl"><FormattedNumberText text={String(hofData[1].score)} />⭐</span></p>
-                                            <p className="absolute bottom-0 right-0 font-bold text-xl sm:text-2xl text-gray-500/50">2.</p>
+                                            <p className="absolute bottom-0 right-0 font-bold text-xl sm:text-2xl text-gray-500/50 dark:text-white">2.</p>
                                         </div>
                                     </div>
                                 </Link>
@@ -129,17 +129,22 @@ export default function HallOfFame() {
 
                     <div>
                         <table className="table-auto w-full rounded-xl overflow-hidden">
-                            <thead className="bg-white/80">
+                            <thead className="bg-white/80 dark:bg-zinc-800/80 dark:text-white transition-all duration-300">
                                 <tr>
                                     <th className="sm:px-4 py-2">Rank</th>
                                     <th className="sm:px-4 py-2 text-left">Player</th>
                                     <th className="sm:px-4 py-2">Score</th>
                                 </tr>
                             </thead>
-                            <tbody className='bg-white/40 text-xs sm:text-base'>
+
+                            <tbody className='text-xs sm:text-base'>
                                 {
                                     Array(hofData.length - 3).fill(0).map((_, index) => (
-                                        <tr key={index} className="hover:bg-gray-300/40 even:bg-white/50 hover:font-bold">
+                                        <tr key={index} className="
+                                        hover:font-bold transition-all duration-300
+                                        odd:bg-white/60 even:bg-white/90 hover:bg-gray-200/50
+                                        odd:dark:bg-zinc-700/80 dark:even:bg-zinc-600/80 hover:dark:bg-zinc-800/80 dark:text-gray-200
+                                        ">
                                             <td className="sm:px-4 py-2 text-center">{index + 4}.</td>
                                             <td className="sm:px-4 py-2">
                                                 <Link href={`/player?q=${hofData[index + 3].id}&uuid=${hofData[index + 3].uuid}`}>
@@ -162,7 +167,7 @@ export default function HallOfFame() {
                         </table>
                     </div>
 
-                    <div className='bg-white/40 rounded-lg mt-4 p-6 text-sm sm:text-sx text-center text-gray-600'>
+                    <div className='bg-white/40 dark:bg-zinc-500/40 rounded-xl mt-4 p-6 text-sm sm:text-sx text-center text-gray-600 dark:text-gray-400 transition-all duration-300'>
                         <p>
                             The <strong>first 5 places are awarded</strong> for each statistic.
                         </p>

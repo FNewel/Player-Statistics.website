@@ -99,10 +99,10 @@ export default function PlayerPage() {
     return (
         <div className="flex flex-col">
             <div className="flex flex-col items-center pb-8">
-                <h2 className="text-3xl sm:text-4xl font-bold">
+                <h2 className="text-3xl sm:text-4xl font-bold dark:text-white transition-all duration-300">
                     Player list
                 </h2>
-                <p className="text-gray-600">
+                <p className="text-gray-500 dark:text-gray-400 transition-all duration-300">
                     {playerNumber} players total
                 </p>
             </div>
@@ -113,7 +113,7 @@ export default function PlayerPage() {
                     placeholder="Search by nick ..."
                     value={searchQuery}
                     onChange={(e) => handleSearch(e.target.value)}
-                    className="p-2 rounded-md w-full focus:outline-none"
+                    className="p-2 rounded-md w-full focus:outline-none dark:bg-zinc-800/80 dark:text-white transition-all duration-300"
                 />
             </div>
 
@@ -129,7 +129,7 @@ export default function PlayerPage() {
                 ) : (
                     <>
                         <table className="table-auto w-full rounded-xl overflow-hidden">
-                            <thead className="bg-white">
+                            <thead className="bg-white/80 dark:bg-zinc-800/80 dark:text-white transition-all duration-300">
                                 <tr className="h-10">
                                     <th className="text-left pl-4">
                                         Player
@@ -183,7 +183,11 @@ export default function PlayerPage() {
                             </thead>
                             <tbody className='bg-white/40 text-xs sm:text-base'>
                                 {paginatedUsers.map((user, index) => (
-                                    <tr key={index} className="hover:bg-gray-300/40 even:bg-white/50 hover:font-bold">
+                                    <tr key={index} className="
+                                    hover:font-bold transition-all duration-300
+                                    odd:bg-white/60 even:bg-white/90 hover:bg-gray-200/50
+                                    odd:dark:bg-zinc-700/80 dark:even:bg-zinc-600/80 hover:dark:bg-zinc-800/80 dark:text-gray-200
+                                    ">
                                         <td className="pl-4 py-1">
                                             <Link href={`/player?q=${user.id}&uuid=${user.uuid}`} className="flex items-center space-x-2">
                                                 <Image
@@ -202,7 +206,10 @@ export default function PlayerPage() {
                         </table>
 
                         {/* Footer for pagination */}
-                        <div className="flex flex-col sm:flex-row justify-between items-center mt-4 space-y-4 sm:space-y-0">
+                        <div className="
+                        flex flex-col sm:flex-row justify-between items-center mt-4 space-y-4 sm:space-y-0
+                        dark:text-white transition-all duration-300
+                        ">
                             <div className="flex items-center space-x-2">
                                 <p>
                                     Showing {(currentPage - 1) * rowsPerPage + 1}-
@@ -212,7 +219,7 @@ export default function PlayerPage() {
                                 <select
                                     value={rowsPerPage}
                                     onChange={handleRowsPerPageChange}
-                                    className="border rounded p-1 focus:outline-none hover:cursor-pointer appearance-none pr-4 bg-white"
+                                    className="rounded p-1 focus:outline-none hover:cursor-pointer appearance-none pr-4 text-black bg-white dark:bg-zinc-800/80 dark:text-white transition-all duration-300"
                                 >
                                     <option value={5}>5</option>
                                     <option value={10}>10</option>
@@ -225,28 +232,28 @@ export default function PlayerPage() {
                                 <button
                                     onClick={() => handlePageChange(1)}
                                     disabled={currentPage === 1}
-                                    className="p-1 border rounded disabled:opacity-50"
+                                    className="p-1 rounded disabled:opacity-50"
                                 >
                                     First
                                 </button>
                                 <button
                                     onClick={() => handlePageChange(currentPage - 1)}
                                     disabled={currentPage === 1}
-                                    className="p-1 border rounded disabled:opacity-50"
+                                    className="p-1 rounded disabled:opacity-50"
                                 >
                                     Prev
                                 </button>
                                 <button
                                     onClick={() => handlePageChange(currentPage + 1)}
                                     disabled={currentPage === Math.ceil(filteredUsers.length / rowsPerPage)}
-                                    className="p-1 border rounded disabled:opacity-50"
+                                    className="p-1 rounded disabled:opacity-50"
                                 >
                                     Next
                                 </button>
                                 <button
                                     onClick={() => handlePageChange(Math.ceil(filteredUsers.length / rowsPerPage))}
                                     disabled={currentPage === Math.ceil(filteredUsers.length / rowsPerPage)}
-                                    className="p-1 border rounded disabled:opacity-50"
+                                    className="p-1 rounded disabled:opacity-50"
                                 >
                                     Last
                                 </button>
