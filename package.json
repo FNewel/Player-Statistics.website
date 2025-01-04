@@ -4,11 +4,12 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && node scripts/postbuild.js",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
+    "archiver": "^7.0.1",
     "mysql2": "^3.11.5",
     "next": "15.1.2",
     "react": "^19.0.0",
